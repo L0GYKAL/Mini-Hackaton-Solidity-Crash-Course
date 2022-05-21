@@ -11,6 +11,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract MyTokenVendor is Ownable {
 
+    public address myDaoToken;
+
     // Create the constructor of this contract taking in argument a name (string memory name_), a symbol (string memory symbol_) and a price (uint256)
     // it should deploy an ERC20 token using 'new MyDaoToken()'
 

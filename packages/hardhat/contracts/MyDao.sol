@@ -6,7 +6,7 @@ import "./MyDaoToken.sol";
 // import "@openzeppelin/contracts/..."; 
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/...
 
-contract MyDAO {
+contract MyDao {
 
   // On deploy the DAO should know and remember which token is governing it
   constructor(address tokenAddress_) payable {
