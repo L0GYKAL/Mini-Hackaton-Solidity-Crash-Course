@@ -3,23 +3,28 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "hardhat/console.sol";
 import "./MyDaoToken.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 // import "@openzeppelin/contracts/..."; 
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/...
 
 contract MyDao {
 
+  IERC20 myDaoToken;
   // On deploy the DAO should know and remember which token is governing it
   constructor(address tokenAddress_) payable {
-    
+    myDaoToken = tokenAddress_;
   }
 
-  //create a 'vote' struct containing: 
+  // create a 'vote' struct containing: 
   // - a string for a message or an IPFS URI
   // - an uint256 for the starting of the vote and aonther one for the ending
   // - a unit256 for the proportion of "yes" to validate the vote
   // - a quorum to know how much of the total supply of the token should vote
   // - a mapping from an address to a boolean
   // - a boolean 'result' with a getter only available if the vote is finished
+  struct vote{
+    
+  }
 
   // Create a vote with the function 'voteFactory'
   // stored in a mapping (as an unbounded array) using a "vote" struct
