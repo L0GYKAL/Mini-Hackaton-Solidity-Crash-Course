@@ -56,7 +56,7 @@ contract MyTokenVendor is Ownable {
     // the function should take into account the 'getExchangeRate' result
     //  ( make sure to add a `pledgedEth(address,uint256)` event and emit it for the frontend <List/> display )
     function pledgeEth(uint256 amount_) external payable isWhitelisted(){
-        myDaoToken.tranfer(msg.sender, getExchangeRate()*amount_);
+        myDaoToken.transfer(msg.sender, getExchangeRate()*amount_);
     }
 
     
