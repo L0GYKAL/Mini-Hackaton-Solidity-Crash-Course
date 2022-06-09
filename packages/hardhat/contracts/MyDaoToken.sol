@@ -10,6 +10,6 @@ contract MyDaoToken is ERC20Snapshot{
     // At deployement the token should mint its deployer 10'000 tokens
     // and use the inhereted constructor 'constructor (your agrs) ERC20(name_, symbol_){...}'
     /* remove the code */
-    constructor (string memory name_, string memory symbol_) ERC20(name_, symbol_){}
+     constructor (string memory name_, string memory symbol_) ERC20(name_, symbol_) {}
 
 }

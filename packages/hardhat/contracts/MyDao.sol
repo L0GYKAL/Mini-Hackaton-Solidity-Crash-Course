@@ -3,19 +3,19 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "hardhat/console.sol";
 import "./MyDaoToken.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol"; 
 // import "@openzeppelin/contracts/..."; 
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/...
 
 contract MyDao {
 
-  IERC20 myDaoToken;
+  ERC20Snapshot myDaoToken;
   /*to remove*/
   mapping(uint256 => Vote) votes;
   uint256 voteCount = 0;
   // On deploy the DAO should know and remember which token is governing it
   constructor(address tokenAddress_) payable {
-    myDaoToken = IERC20(tokenAddress_);
+    myDaoToken = ERC20Snapshot(tokenAddress_);
   }
 
   // create a 'Vote' struct containing: 
@@ -85,13 +85,13 @@ contract MyDao {
     for(uint256 i=0; i < votes[index].votersCount; i+=1){
       bool choice = votes[index].ballots[votes[index].voters[i]];
       if (choice){//true
-        pro += myDaoToken.balanceOf(votes[index].voters[i]);
+        pro += myDaoToken.balanceOfAt(votes[index].voters[i], votes[index].start);
       }
       else{
-        against += myDaoToken.balanceOf(votes[index].voters[i]);
+        against += myDaoToken.balanceOfAt(votes[index].voters[i], votes[index].start);
       }
-      require(pro + against > myDaoToken.totalSupply()*votes[index].quorum/100);
-      if (pro > myDaoToken.totalSupply()*votes[index].threshold/100){
+      require(pro + against > myDaoToken.totalSupplyAt(votes[index].start)*votes[index].quorum/100);
+      if (pro > myDaoToken.totalSupplyAt(votes[index].start)*votes[index].threshold/100){
         votes[index].result = true;
         return true;
       }
