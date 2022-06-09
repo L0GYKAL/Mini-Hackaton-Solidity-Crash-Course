@@ -82,7 +82,7 @@ contract MyDao {
     require(votes[index].hasBeenExecuted == false, "the vote has already been executed");
     uint256 against = 0;
     uint256 pro = 0;
-    for(uint256 i=0; i < votes[index].votersCount; i++){
+    for(uint256 i=0; i < votes[index].votersCount; i+=1){
       bool choice = votes[index].ballots[votes[index].voters[i]];
       if (choice){//true
         pro += myDaoToken.balanceOf(votes[index].voters[i]);
