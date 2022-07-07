@@ -6,22 +6,27 @@ use(solidity);
 
 describe("My Dapp", function () {
   this.timeout(125000);
-
+  const [ owner ] = ethers.getSigners();
   let myTokenVendor;
 
   if(process.env.CONTRACT_ADDRESS){
     // live contracts, token already deployed
   }else{
     describe("MyTokenVendor", function () {
-      it("Should deploy MyTokenVendor", async function () {
+      it("Should deploy MyTokenVendor and myDaoToken", async function () {
         const MyTokenVendor = await ethers.getContractFactory("MyTokenVendor");
-
+        
         myTokenVendor = await MyTokenVendor.deploy();
+      });
+
+      it("Should deploy myDaoToken in its contructor()", async function () {
+        const tokenAdress = myTokenVendor.myDaoToken();
+
       });
 
       describe("addToWhitelist()", function () {
         it("Should add to whitelist ",async function () {
-          const [ owner ] = await ethers.getSigners();
+          
           await myTokenVendor.addToWhitelist(owner.address);
           expect(myTokenVendor.whitelisted(owner.address));
         })
@@ -39,6 +44,11 @@ describe("My Dapp", function () {
           expect(finalBalance - previousBalance).to.equal(amount);
 
           // TODO: check if the token balance changed
+          const token = await myTokenVendor.myDaoToken();
+          const tokenContract = ethers.getContractFactory("MyDaoToken");
+          const balance = await tokenContract.balanceOf(owner.address);
+          console.log('\t', "Your token balance is ", balance);
+          expect(balance).to.gre
         });
 
         it("Should emit a pledgeEth event ", async function () {
@@ -50,10 +60,7 @@ describe("My Dapp", function () {
             .withArgs(owner.address, amount);
         });
 
-        it("Should deploy myDaoToken in its contructor()", async function () {
-          const tokenAdress = myTokenVendor.myDaoToken();
-
-        });
+        
       });
     });
   }
